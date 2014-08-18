@@ -9,6 +9,13 @@ syntax on
 
 let mapleader = ","
 
+" Do any specific vim setup in a local only vimrc.
+let s:local_vimrc = expand("~/.vim/local.vimrc")
+if filereadable(s:local_vimrc)
+  "echomsg "Found readable local vimrc, sourcing..."
+  exec "source " . s:local_vimrc
+endif
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " OPTIONS
 " -------
