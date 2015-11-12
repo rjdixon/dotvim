@@ -74,6 +74,9 @@ hi StatusLine ctermfg=Cyan
 " Plugin options
 " --------------
 
+let Tlist_Sort_Type = "name"
+let Tlist_Display_Tag_Scope = 0
+let Tlist_WinWidth = 50
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " My mappings
@@ -82,11 +85,12 @@ hi StatusLine ctermfg=Cyan
 " Open commonly used files in a vertical split
 nnoremap <Leader>vv :vsp $MYVIMRC<cr>
 
-nnoremap zz :q!<cr>
+nnoremap <Leader>w :q!<cr>
+"nnoremap <Leader>ww :qall!<cr>
 
 " (de)indent 2 spaces up to mark a
-noremap  :'a,.s/^  //
-noremap  :'a,.s/^/  /
+"noremap  :'a,.s/^  //
+"noremap  :'a,.s/^/  /
 
 noremap <F1> :vert help
 noremap <F4> :qall!
@@ -112,13 +116,17 @@ nnoremap <C-h> <C-w>h
 nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
+
 " Minimize the current window horizontally (opposite of <C-w>|)
-nnoremap <C-2>\ :vertical resize -1000
+nnoremap <C-w>\ :vertical resize -1000
+
+" Resize windows
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " My commands
 " -----------
-command! Rediff diffoff | diffthis
+" Use :diffupdate instead.
+"command! Rediff diffoff | diffthis
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Substitute the word under the cursor for the provided replacement
@@ -176,3 +184,10 @@ nnoremap <C-w>l <nop>
 
 nnoremap <Space> i_<esc>r
 nnoremap K o<esc>
+
+nnoremap <Leader>t :TlistToggle<cr>
+
+" Complete my parens etc for me
+"inoremap ( ()<ESC>i
+"inoremap [ []<ESC>i
+"inoremap { {}<ESC>i
