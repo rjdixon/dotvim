@@ -79,14 +79,17 @@ hi StatusLine ctermfg=Cyan
 " My mappings
 " -----------
 
+" Use jk for switching out of insert / visual modes
+inoremap jk <esc>
+inoremap <esc> <nop>
+
+vnoremap jk <esc>
+vnoremap <esc> <nop>
+
 " Open commonly used files in a vertical split
 nnoremap <Leader>vv :vsp $MYVIMRC<cr>
 
-nnoremap zz :q!<cr>
-
-" (de)indent 2 spaces up to mark a
-noremap  :'a,.s/^  //
-noremap  :'a,.s/^/  /
+nnoremap <Leader>w :q!<cr>
 
 noremap <F1> :vert help
 noremap <F4> :qall!
@@ -118,7 +121,6 @@ nnoremap <C-2>\ :vertical resize -1000
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " My commands
 " -----------
-command! Rediff diffoff | diffthis
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Substitute the word under the cursor for the provided replacement
@@ -129,7 +131,6 @@ function! Replace()
   let l:replaceString = inputdialog('Replace "' . l:currentWord . '" with: ', l:currentWord)
   call inputrestore()
   if l:replaceString != ""
-    "execute "%s/\<" . l:currentWord . "\>/" . l:replaceString . "/c"
     execute ".,$s/\\<" . l:currentWord . "\\>/" . l:replaceString . "/c"
   endif
 endfunction
@@ -144,35 +145,4 @@ noremap <Leader>s :call Replace()
 augroup misc_autos
   autocmd!
   autocmd BufNewFile,BufRead *.jsont set ft=javascript
-  autocmd BufNewFile,BufRead */apiserving/config/games/*.api set ft=javascript
-
-  " Set up file type for megastore mdl file
-  au BufNewFile,BufRead *.mdl setf mdl
-  au BufNewFile,BufRead *.topic setf gcl
 augroup END
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Tricks
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Testing
-"set number
-"set relativenumber
-
-" Train fingers to use jk for switching out of insert mode
-inoremap jk <esc>
-inoremap <esc> <nop>
-inoremap <C-[> <nop>
-
-vnoremap jk <esc>
-vnoremap <esc> <nop>
-vnoremap <C-[> <nop>
-
-" Train muscle memory
-nnoremap <C-w>j <nop>
-nnoremap <C-w>k <nop>
-nnoremap <C-w>h <nop>
-nnoremap <C-w>l <nop>
-
-nnoremap <Space> i_<esc>r
-nnoremap K o<esc>
