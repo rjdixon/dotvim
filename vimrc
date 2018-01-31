@@ -5,8 +5,7 @@
 " http://nvie.com/posts/how-i-boosted-my-vim/
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-syntax on
-
+set nocompatible
 let mapleader = ","
 
 " Do any specific vim setup in a local only vimrc.
@@ -15,6 +14,9 @@ if filereadable(s:local_vimrc)
   "echomsg "Found readable local vimrc, sourcing..."
   exec "source " . s:local_vimrc
 endif
+
+filetype plugin indent on
+syntax on
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " OPTIONS
@@ -59,6 +61,8 @@ set splitright
 set noswapfile
 set wildmode=longest,list
 set nowrap
+set visualbell
+set undofile
 
 " Make the quickfix window occupy the entire width of the window.
 botright cwindow
@@ -120,13 +124,24 @@ nnoremap <C-l> <C-w>l
 " Minimize the current window horizontally (opposite of <C-w>|)
 nnoremap <C-w>\ :vertical resize -1000
 
-" Resize windows
+" Bracketed paste mode - https://coderwall.com/p/if9mda/automatically-set-paste-mode-in-vim-when-pasting-in-insert-mode
+let &t_SI .= "\<Esc>[?2004h"
+let &t_EI .= "\<Esc>[?2004l"
+
+inoremap <special> <expr> <Esc>[200~ XTermPasteBegin()
+
+function! XTermPasteBegin()
+  set pastetoggle=<Esc>[201~
+  set paste
+  return ""
+endfunction
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " My commands
 " -----------
 " Use :diffupdate instead.
 "command! Rediff diffoff | diffthis
+command E Explore
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Substitute the word under the cursor for the provided replacement
@@ -186,6 +201,11 @@ nnoremap <Space> i_<esc>r
 nnoremap K o<esc>
 
 nnoremap <Leader>t :TlistToggle<cr>
+
+nnoremap ]i ]I:let nr = input("Which one: ")<Bar>exe "normal " . nr ."]\t"<CR>
+
+set wildmenu                    " Enhanced completion.
+set wildmode=list:longest       " Act like shell completion.
 
 " Complete my parens etc for me
 "inoremap ( ()<ESC>i
